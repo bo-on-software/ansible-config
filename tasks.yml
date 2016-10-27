@@ -65,7 +65,7 @@
 
 - name: install python packages
   become: yes
-  pip: name={{ item }}
+  pip: name={{ item }} executable=pip3
   with_items:
     - neovim
     - numpy
