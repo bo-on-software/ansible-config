@@ -28,7 +28,6 @@
     - distcc
     - exuberant-ctags
     - g++
-    - gconftool-2
     - gdb
     - gimp
     - git
