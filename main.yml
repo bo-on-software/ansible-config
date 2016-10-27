@@ -1,0 +1,4 @@
+---
+- hosts: pc
+  tasks:
+    - include: tasks.yml

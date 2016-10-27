@@ -1,0 +1,117 @@
+- name: add apt repositories
+  become: yes
+  apt_repository: repo={{ item }}
+  with_items:
+    - ppa:neovim-ppa/unstable
+
+- name: Google linux signing key present
+  become: yes
+  apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+- name: Google chrome repo present
+  become: yes
+  copy:
+    content: "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main"
+    dest: /etc/apt/sources.list.d/google-chrome.list
+
+- name: update apt cache
+  become: yes
+  apt: update_cache=yes
+
+- name: install packages
+  become: yes
+  apt: name={{ item }} state=latest
+  with_items:
+    - android-tools-fastboot
+    - clang
+    - cmake
+    - curl
+    - distcc
+    - exuberant-ctags
+    - g++
+    - gdb
+    - gimp
+    - git
+    - google-chrome-stable
+    - google-mock
+    - guake
+    - htop
+    - indicator-multiload
+    - libboost-all-dev
+    - libgflags-dev
+    - libgoogle-glog-dev
+    - libgtest-dev
+    - libjson-xs-perl
+    - libopencv-dev
+    - libprotobuf-dev
+    - make
+    - neovim
+    - nfs-kernel-server
+    - nvidia-cuda-dev
+    - okular
+    - protobuf-compiler
+    - python-pygments
+    - python3-dev
+    - python3-pip
+    - python3-tk
+    - scons
+    - screen
+    - silversearcher-ag
+    - socat
+    - texlive-latex-extra
+    - texlive-xetex
+    - valgrind
+    - vlc
+    - wget
+
+- name: install python packages
+  become: yes
+  pip: name={{ item }}
+  with_items:
+    - neovim
+    - numpy
+    - scikit-image
+    - https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow-0.11.0rc1-cp35-cp35m-linux_x86_64.whl
+
+- name: Create directories
+  file: path={{ item }} state=directory
+  with_items:
+    - ~/Programs/
+    - ~/Projects/
+    - ~/Temp/
+
+- name: clone fzf
+  git: repo=https://github.com/junegunn/fzf dest=~/.fzf
+  register: fzf_repo
+- name: install fzf
+  command: ~/.fzf/install chdir=~/.fzf
+  when: fzf_repo.changed
+
+- name: check clion installed
+  stat: path=~/Programs/CLion/bin/clion.sh
+  register: clion_sh_stats
+- set_fact: clion_installed={{clion_sh_stats.stat.exists is defined and clion_sh_stats.stat.exists|bool}}
+- name: download clion
+  get_url: url=https://download.jetbrains.com/cpp/CLion-2016.2.3.tar.gz dest=~/Temp/clion.tar.gz
+  when: not clion_installed
+- name: extract clion
+  shell: tar xf ~/Temp/clion.tar.gz -C ~/Programs/CLion
+  when: not clion_installed
+
+- name: check telegram installed
+  stat: path=~/Programs/Telegram/Telegram
+  register: telegram_sh_stats
+- set_fact: telegram_installed={{telegram_sh_stats.stat.exists is defined and telegram_sh_stats.stat.exists|bool}}
+- name: download telegram
+  get_url: url=https://telegram.org/dl/desktop/linux dest=~/Temp/telegram.tar.xz
+  when: not telegram_installed
+- name: extract telegram
+  shell: tar xf ~/Temp/telegram.tar.xz -C ~/Programs/Telegram
+  when: not telegram_installed
+
+- name: clone neovim config
+  git: repo=https://github.com/bo-on-software/config dest=~/Projects/config
+- name: create symlink to neovim config
+  file: src=~/Projects/config/nvim dest=~/.config/nvim state=link
+- name: update neovim plugins
+  command: nvim +PlugUpdate +qa
+
