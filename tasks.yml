@@ -65,7 +65,7 @@
 
 - name: install python packages
   become: yes
-  pip: name={{ item }} executable=pip3
+  pip: name={{ item }} executable=pip3 state=latest
   with_items:
     - neovim
     - numpy
@@ -76,6 +76,7 @@
   file: path={{ item }} state=directory
   with_items:
     - ~/Programs/
+    - ~/Programs/CLion
     - ~/Projects/
     - ~/Temp/
 
@@ -94,7 +95,7 @@
   get_url: url=https://download.jetbrains.com/cpp/CLion-2016.2.3.tar.gz dest=~/Temp/clion.tar.gz
   when: not clion_installed
 - name: extract clion
-  shell: tar xf ~/Temp/clion.tar.gz -C ~/Programs/CLion
+  command: tar xf ~/Temp/clion.tar.gz -C ~/Programs/CLion --strip-components=1
   when: not clion_installed
 
 - name: check telegram installed
@@ -105,7 +106,7 @@
   get_url: url=https://telegram.org/dl/desktop/linux dest=~/Temp/telegram.tar.xz
   when: not telegram_installed
 - name: extract telegram
-  shell: tar xf ~/Temp/telegram.tar.xz -C ~/Programs/Telegram
+  shell: tar xf ~/Temp/telegram.tar.xz -C ~/Programs
   when: not telegram_installed
 
 - name: clone neovim config
