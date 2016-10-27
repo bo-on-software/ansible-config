@@ -157,7 +157,6 @@
     - { type: 'int',    key: '/apps/guake/style/background/transparency', value: 10 }
 
 - name: add lines to bashrc
-  become: yes
   lineinfile: dest=~/.bashrc line={{ item }}
   with_items:
     - export EDITOR=nvim
