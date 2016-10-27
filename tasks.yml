@@ -136,8 +136,19 @@
     - { key: '/org/gnome/desktop/wm/keybindings/switch-input-source',            value: "['Caps_Lock']" }
     - { key: '/de/mh21/indicator-multiload/general/background-color',            value: "'traditional:background'" }
     - { key: '/de/mh21/indicator-multiload/general/color-scheme',                value: "'traditional'" }
+    - { key: '/de/mh21/indicator-multiload/general/settings-version',            value: 3 }
+    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu1/color',               value: "'traditional:cpu1'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu2/color',               value: "'traditional:cpu2'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu3/color',               value: "'traditional:cpu3'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu4/color',               value: "'traditional:cpu4'" }
     - { key: '/de/mh21/indicator-multiload/graphs/disk/enabled',                 value: 'true' }
+    - { key: '/de/mh21/indicator-multiload/graphs/disk/disk1/color',             value: "'traditional:disk1'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/disk/disk2/color',             value: "'traditional:disk2'" }
     - { key: '/de/mh21/indicator-multiload/graphs/mem/enabled',                  value: 'true' }
+    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem1/color',               value: "'traditional:mem1'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem2/color',               value: "'traditional:mem2'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem3/color',               value: "'traditional:mem3'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem4/color',               value: "'traditional:mem4'" }
 
 - name: write settings with gconftool-2
   command: gconftool-2 --type "{{item.type}}" --set "{{item.key}}" "{{item.value}}"
