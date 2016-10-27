@@ -155,3 +155,18 @@
   with_items:
     - { type: 'string', key: '/apps/guake/keybindings/global/show_hide',  value: 'disabled' }
     - { type: 'int',    key: '/apps/guake/style/background/transparency', value: 10 }
+
+- name: add lines to bashrc
+  become: yes
+  lineinfile: dest=~/.bashrc line={{ item }}
+  with_items:
+    - export EDITOR=nvim
+    - export HISTCONTROL=ignoredups:erasedups
+    - export HISTSIZE=100000
+    - export HISTFILESIZE=100000
+    - shopt -s histappend
+    - export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+    - alias gd='git diff'
+    - alias gdc='git diff --cached'
+    - alias gt='git status -uno'
+    - alias gtu='git status'
