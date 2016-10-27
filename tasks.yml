@@ -28,6 +28,7 @@
     - distcc
     - exuberant-ctags
     - g++
+    - gconftool-2
     - gdb
     - gimp
     - git
@@ -137,3 +138,9 @@
     - { key: '/de/mh21/indicator-multiload/general/color-scheme',         value: "'traditional'" }
     - { key: '/de/mh21/indicator-multiload/graphs/disk/enabled',          value: 'true' }
     - { key: '/de/mh21/indicator-multiload/graphs/mem/enabled',           value: 'true' }
+
+- name: write settings with gconftool-2
+  command: gconftool-2 --type "{{item.type}}" --set "{{item.key}}" "{{item.value}}"
+  with_items:
+    - { type: 'string', key: '/apps/guake/keybindings/global/show_hide',  value: 'disabled' }
+    - { type: 'int',    key: '/apps/guake/style/background/transparency', value: 10 }
