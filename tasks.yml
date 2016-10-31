@@ -129,6 +129,11 @@
     - user.name "Boris Sazonov"
     - user.email "bsazonov@gmail.com"
 
+- name: set push URL for ansible-config
+  command: "git remote set-url --push origin git@github.com:bo-on-software/ansible-config.git"
+  args:
+    chdir: ~/Projects/ansible-config
+
 - name: clone neovim config
   git: repo=https://github.com/bo-on-software/config dest=~/Projects/config
 - name: create symlink to neovim config
