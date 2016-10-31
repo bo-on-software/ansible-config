@@ -122,6 +122,13 @@
   shell: tar xf ~/Temp/telegram.tar.xz -C ~/Programs
   when: not telegram_installed
 
+- name: configure git
+  command: git config --global {{ item }}
+  with_items:
+    - push.default simple
+    - user.name "Boris Sazonov"
+    - user.email "bsazonov@gmail.com"
+
 - name: clone neovim config
   git: repo=https://github.com/bo-on-software/config dest=~/Projects/config
 - name: create symlink to neovim config
