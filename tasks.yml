@@ -1,8 +1,19 @@
+- name: check if i386 is enabled
+  shell: dpkg --print-foreign-architectures | grep i386
+  register: result_i386_check
+  changed_when: result_i386_check.rc == 1
+  failed_when: result_i386_check.rc > 1
+
+- name: enable i386 architecture
+  command: dpkg --add-architecture i386
+  when: result_i386_check.rc == 1
+
 - name: add apt repositories
   become: yes
   apt_repository: repo={{ item }}
   with_items:
     - ppa:neovim-ppa/unstable
+    - ppa:wine/wine-builds
 
 - name: Google linux signing key present
   become: yes
@@ -62,6 +73,7 @@
     - valgrind
     - vlc
     - wget
+    - winehq-devel
 
 - name: install python packages
   become: yes
