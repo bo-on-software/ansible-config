@@ -20,8 +20,8 @@
   apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
 - name: Google chrome repo present
   become: yes
-  copy:
-    content: "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main"
+  lineinfile:
+    line: "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main"
     dest: /etc/apt/sources.list.d/google-chrome.list
 
 - name: update apt cache
