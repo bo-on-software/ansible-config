@@ -138,10 +138,12 @@
 
 - name: clone neovim config
   git: repo=https://github.com/bo-on-software/config dest=~/Projects/config
+- name: set push URL for config
+  command: "git remote set-url --push origin git@github.com:bo-on-software/config.git"
+  args:
+    chdir: ~/Projects/config
 - name: create symlink to neovim config
   file: src=~/Projects/config/nvim dest=~/.config/nvim state=link
-- name: update neovim plugins
-  command: nvim +PlugUpdate +qa
 
 - set_fact: profile_id={{ lookup('pipe', 'dconf list /org/gnome/terminal/legacy/profiles:/') }}
 - name: set gnome-terminal scrollback
