@@ -154,6 +154,8 @@
   with_items:
     - { key: '/org/compiz/profiles/unity/plugins/core/hsize',                    value: 4 }
     - { key: '/org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode', value: 1 }
+    - { key: '/org/compiz/profiles/unity/plugins/ezoom/zoom-in-button',          value: "'<Control><Alt>Button4'" }
+    - { key: '/org/compiz/profiles/unity/plugins/ezoom/zoom-out-button',         value: "'<Control><Alt>Button5'" }
     - { key: '/org/compiz/integrated/command-1',                                 value: "'guake -t'" }
     - { key: '/org/compiz/integrated/run-command-1',                             value: "['F12']" }
     - { key: '/org/gnome/terminal/legacy/keybindings/help',                      value: "'disabled'" }
