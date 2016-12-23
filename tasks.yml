@@ -178,8 +178,8 @@
     - { key: '/de/mh21/indicator-multiload/graphs/mem/mem3/color',                  value: "'traditional:mem3'" }
     - { key: '/de/mh21/indicator-multiload/graphs/mem/mem4/color',                  value: "'traditional:mem4'" }
 
-- name: write settings with gconftool-2
-  command: gconftool-2 --type "{{item.type}}" --set "{{item.key}}" "{{item.value}}"
+- name: write settings with gconftool
+  gconftool: type="{{ item.type | string }}" key="{{ item.key | string }}" value="{{ item.value | string }}"
   with_items:
     - { type: 'string', key: '/apps/guake/keybindings/global/show_hide',  value: 'disabled' }
     - { type: 'int',    key: '/apps/guake/style/background/transparency', value: 10 }
