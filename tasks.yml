@@ -150,41 +150,40 @@
   file: src=~/Projects/config/nvim dest=~/.config/nvim state=link
 
 - set_fact: profile_id={{ lookup('pipe', 'dconf list /org/gnome/terminal/legacy/profiles:/') }}
-- name: set gnome-terminal scrollback
-  command: dconf write /org/gnome/terminal/legacy/profiles:/{{profile_id}}scrollback-lines 65536
 
 - name: write settings with dconf
-  command: dconf write "{{item.key}}" "{{item.value}}"
+  dconf: key="{{ item.key | string }}" value="{{ item.value | string }}"
   with_items:
-    - { key: '/org/compiz/profiles/unity/plugins/core/hsize',                    value: 4 }
-    - { key: '/org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode', value: 1 }
-    - { key: '/org/compiz/profiles/unity/plugins/ezoom/zoom-in-button',          value: "'<Control><Alt>Button4'" }
-    - { key: '/org/compiz/profiles/unity/plugins/ezoom/zoom-out-button',         value: "'<Control><Alt>Button5'" }
-    - { key: '/org/compiz/integrated/command-1',                                 value: "'guake -t'" }
-    - { key: '/org/compiz/integrated/run-command-1',                             value: "['F12']" }
-    - { key: '/org/gnome/terminal/legacy/keybindings/help',                      value: "'disabled'" }
-    - { key: '/org/gnome/settings-daemon/plugins/media-keys/volume-up',          value: "'<Primary><Alt>Up'" }
-    - { key: '/org/gnome/settings-daemon/plugins/media-keys/volume-down',        value: "'<Primary><Alt>Down'" }
-    - { key: '/org/gnome/desktop/input-sources/sources',                         value: "[('xkb', 'us'), ('xkb', 'ru')]" }
-    - { key: '/org/gnome/desktop/input-sources/xkb-options',                     value: "['compose:ralt']" }
-    - { key: '/org/gnome/desktop/wm/keybindings/begin-move',                     value: "['disabled']" }
-    - { key: '/org/gnome/desktop/wm/keybindings/begin-resize',                   value: "['disabled']" }
-    - { key: '/org/gnome/desktop/wm/keybindings/switch-input-source',            value: "['Caps_Lock']" }
-    - { key: '/de/mh21/indicator-multiload/general/background-color',            value: "'traditional:background'" }
-    - { key: '/de/mh21/indicator-multiload/general/color-scheme',                value: "'traditional'" }
-    - { key: '/de/mh21/indicator-multiload/general/settings-version',            value: 3 }
-    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu1/color',               value: "'traditional:cpu1'" }
-    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu2/color',               value: "'traditional:cpu2'" }
-    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu3/color',               value: "'traditional:cpu3'" }
-    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu4/color',               value: "'traditional:cpu4'" }
-    - { key: '/de/mh21/indicator-multiload/graphs/disk/enabled',                 value: 'true' }
-    - { key: '/de/mh21/indicator-multiload/graphs/disk/disk1/color',             value: "'traditional:disk1'" }
-    - { key: '/de/mh21/indicator-multiload/graphs/disk/disk2/color',             value: "'traditional:disk2'" }
-    - { key: '/de/mh21/indicator-multiload/graphs/mem/enabled',                  value: 'true' }
-    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem1/color',               value: "'traditional:mem1'" }
-    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem2/color',               value: "'traditional:mem2'" }
-    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem3/color',               value: "'traditional:mem3'" }
-    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem4/color',               value: "'traditional:mem4'" }
+    - { key: '/org/gnome/terminal/legacy/profiles:/{{profile_id}}scrollback-lines', value: 65536 }
+    - { key: '/org/compiz/profiles/unity/plugins/core/hsize',                       value: 4 }
+    - { key: '/org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode',    value: 1 }
+    - { key: '/org/compiz/profiles/unity/plugins/ezoom/zoom-in-button',             value: "'<Control><Alt>Button4'" }
+    - { key: '/org/compiz/profiles/unity/plugins/ezoom/zoom-out-button',            value: "'<Control><Alt>Button5'" }
+    - { key: '/org/compiz/integrated/command-1',                                    value: "'guake -t'" }
+    - { key: '/org/compiz/integrated/run-command-1',                                value: "['F12']" }
+    - { key: '/org/gnome/terminal/legacy/keybindings/help',                         value: "'disabled'" }
+    - { key: '/org/gnome/settings-daemon/plugins/media-keys/volume-up',             value: "'<Primary><Alt>Up'" }
+    - { key: '/org/gnome/settings-daemon/plugins/media-keys/volume-down',           value: "'<Primary><Alt>Down'" }
+    - { key: '/org/gnome/desktop/input-sources/sources',                            value: "[('xkb', 'us'), ('xkb', 'ru')]" }
+    - { key: '/org/gnome/desktop/input-sources/xkb-options',                        value: "['compose:ralt']" }
+    - { key: '/org/gnome/desktop/wm/keybindings/begin-move',                        value: "['disabled']" }
+    - { key: '/org/gnome/desktop/wm/keybindings/begin-resize',                      value: "['disabled']" }
+    - { key: '/org/gnome/desktop/wm/keybindings/switch-input-source',               value: "['Caps_Lock']" }
+    - { key: '/de/mh21/indicator-multiload/general/background-color',               value: "'traditional:background'" }
+    - { key: '/de/mh21/indicator-multiload/general/color-scheme',                   value: "'traditional'" }
+    - { key: '/de/mh21/indicator-multiload/general/settings-version',               value: 3 }
+    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu1/color',                  value: "'traditional:cpu1'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu2/color',                  value: "'traditional:cpu2'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu3/color',                  value: "'traditional:cpu3'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/cpu/cpu4/color',                  value: "'traditional:cpu4'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/disk/enabled',                    value: 'true' }
+    - { key: '/de/mh21/indicator-multiload/graphs/disk/disk1/color',                value: "'traditional:disk1'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/disk/disk2/color',                value: "'traditional:disk2'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/mem/enabled',                     value: 'true' }
+    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem1/color',                  value: "'traditional:mem1'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem2/color',                  value: "'traditional:mem2'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem3/color',                  value: "'traditional:mem3'" }
+    - { key: '/de/mh21/indicator-multiload/graphs/mem/mem4/color',                  value: "'traditional:mem4'" }
 
 - name: write settings with gconftool-2
   command: gconftool-2 --type "{{item.type}}" --set "{{item.key}}" "{{item.value}}"
