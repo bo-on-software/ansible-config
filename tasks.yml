@@ -78,6 +78,10 @@
     - wget
     - winehq-devel
 
+- name: upgrade pip
+  become: yes
+  command: pip install --upgrade pip
+
 - name: install python packages
   become: yes
   pip: name={{ item }} executable=pip3 state=latest
