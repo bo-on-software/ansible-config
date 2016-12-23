@@ -126,23 +126,19 @@
   when: not telegram_installed
 
 - name: configure git
-  command: git config --global {{ item }}
+  git_config: name="{{ item.name }}" scope=global value="{{ item.value }}"
   with_items:
-    - push.default simple
-    - user.name "Boris Sazonov"
-    - user.email "bsazonov@gmail.com"
+    - { name: 'push.default', value: 'simple' }
+    - { name: 'user.name',    value: 'Boris Sazonov' }
+    - { name: 'user.email',   value: 'bsazonov@gmail.com' }
 
 - name: set push URL for ansible-config
-  command: "git remote set-url --push origin git@github.com:bo-on-software/ansible-config.git"
-  args:
-    chdir: ~/Projects/ansible-config
+  git_config: name=remote.origin.pushurl scope=local repo=~/Projects/ansible-config value="git@github.com:bo-on-software/ansible-config.git"
 
 - name: clone neovim config
   git: repo=https://github.com/bo-on-software/config dest=~/Projects/config
 - name: set push URL for config
-  command: "git remote set-url --push origin git@github.com:bo-on-software/config.git"
-  args:
-    chdir: ~/Projects/config
+  git_config: name=remote.origin.pushurl scope=local repo=~/Projects/config value="git@github.com:bo-on-software/config.git"
 - name: create symlink to neovim config
   file: src=~/Projects/config/nvim dest=~/.config/nvim state=link
 
